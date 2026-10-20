@@ -9,8 +9,14 @@ LIB="$HOME/ReelLibrary"
 LOG="$HOME/reelbot/logs/library-push.log"
 if [ -d "$LIB/.git" ]; then
   mkdir -p "$(dirname "$LOG")"
-  {
+  (
     echo "== $(date '+%F %T')"
+    # pull first: the PC edits notes too (analyzed_in). On a conflict, log it and leave it for a human.
+    if ! git -C "$LIB" pull -q --rebase --autostash origin main; then
+      echo "pull failed; not pushing. Run: git -C ~/ReelLibrary status"
+      git -C "$LIB" rebase --abort 2>/dev/null || true
+      exit 0
+    fi
     git -C "$LIB" add -A notes archive 2>/dev/null || git -C "$LIB" add -A notes
     # INDEX.md changes on every rebuild (timestamp line); only push when a note changed
     if git -C "$LIB" diff --cached --quiet -- . ':(exclude)notes/INDEX.md'; then
@@ -19,6 +25,6 @@ if [ -d "$LIB/.git" ]; then
     else
       git -C "$LIB" commit -q -m "notes: nightly index $(date +%F)" && git -C "$LIB" push -q origin HEAD
     fi
-  } >>"$LOG" 2>&1
+  ) >>"$LOG" 2>&1
 fi
 exit $rc

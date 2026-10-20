@@ -164,6 +164,17 @@ how-to.
 pass may change it. `analyzed_in` stays empty: the analysis pass fills it with the vault page
 that absorbed this note.
 
+## Pushing the library to GitHub
+
+`~/ReelLibrary` is a checkout of the private `reel-library` repo. A nightly job (3 am) pulls, then
+commits and pushes the notes so the PC can work on them. If he asks to push or sync the library
+now ("push the notes", "sync the library", "I'm about to work on the PC"), run
+```bash
+~/.hermes/scripts/reel_index_job.sh
+```
+and report the last lines of `~/reelbot/logs/library-push.log` ("nothing new to push", or the
+commit). If it says the pull failed, tell him and don't try to fix the git state yourself.
+
 ## Searching the library
 
 For questions about past reels, read `~/ReelLibrary/notes/INDEX.md` first (one row per note:
