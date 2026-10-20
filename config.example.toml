@@ -1,0 +1,33 @@
+# Reel bot settings. setup.sh copies this to config.toml; edit that copy.
+
+# Where reports and research notes are saved. Point Obsidian at this folder if you want.
+library_dir = "~/ReelLibrary"
+
+# The burner Instagram account's login, saved by:  reel_pipeline.py cookies --browser firefox
+cookies_file = "~/reelbot/cookies.txt"
+
+# Only download while on home Wi-Fi. Run "reel_pipeline.py network" at home and paste the
+# router_mac it prints here. Leave the list empty to turn the check off.
+home_router_macs = []
+
+# Links the bot will accept.
+allowed_domains = ["instagram.com", "tiktok.com", "youtube.com", "youtu.be"]
+
+# Keep the downloaded video file (uses more disk). Key frames are always kept.
+keep_video = false
+
+# Refuse anything longer than this (reels are short; stops someone feeding it a 3-hour video).
+max_duration_seconds = 600
+
+# Speech-to-text. "auto" uses mlx-whisper on Apple Silicon. large-v3-turbo is accurate and fast
+# on an M1 Pro; use "mlx-community/whisper-small-mlx" if you want it lighter.
+transcribe_backend = "auto"
+whisper_model_mlx = "mlx-community/whisper-large-v3-turbo"
+whisper_model_faster = "large-v3-turbo"
+
+# On-screen text reading. "auto" uses Apple's built-in Vision OCR on a Mac.
+ocr_backend = "auto"
+
+# How many frames per second to check for on-screen text, and how many key frames to keep.
+frames_per_second = 2.0
+keyframes_to_keep = 8

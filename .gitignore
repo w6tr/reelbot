@@ -1,0 +1,12 @@
+# per-machine settings and the burner account's login
+config.toml
+cookies.txt
+# local state
+backups/
+logs/
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+# personal handoff docs live in the private agent-notes repo
+research/

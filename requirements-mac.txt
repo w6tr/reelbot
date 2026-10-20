@@ -1,0 +1,6 @@
+yt-dlp
+curl-cffi
+mlx-whisper
+ocrmac
+Pillow
+imageio-ffmpeg
