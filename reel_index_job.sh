@@ -11,8 +11,10 @@ if [ -d "$LIB/.git" ]; then
   mkdir -p "$(dirname "$LOG")"
   {
     echo "== $(date '+%F %T')"
-    git -C "$LIB" add -A notes
-    if git -C "$LIB" diff --cached --quiet; then
+    git -C "$LIB" add -A notes archive 2>/dev/null || git -C "$LIB" add -A notes
+    # INDEX.md changes on every rebuild (timestamp line); only push when a note changed
+    if git -C "$LIB" diff --cached --quiet -- . ':(exclude)notes/INDEX.md'; then
+      git -C "$LIB" reset -q
       echo "nothing new to push"
     else
       git -C "$LIB" commit -q -m "notes: nightly index $(date +%F)" && git -C "$LIB" push -q origin HEAD
